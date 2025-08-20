@@ -14,6 +14,7 @@ function ReactQueryPage() {
     select: (data) => {
       return data.data;
     },
+    gcTime: 5000, // 5초
   });
   console.log("ddd", data, isLoading);
   console.log("error", isError, error);
@@ -31,12 +32,6 @@ function ReactQueryPage() {
       ))}
     </div>
   );
-
-  // return (
-  //   <div style={{ padding: "20px" }}>
-  //     <h1>React Query Demo</h1>
-  //   </div>
-  // );
 }
 
 export default ReactQueryPage;
