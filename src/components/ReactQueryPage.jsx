@@ -6,16 +6,20 @@ function ReactQueryPage() {
   const fetchPost = () => {
     return axios.get("http://localhost:3004/posts");
   };
-  const { isLoading, data, isError, error } = useQuery({
+  const { isLoading, data, isError, error, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPost,
     // retry: 에러 시도 3번(총 4회)
     retry: 1,
-    staleTime: 60000, // 1분(60초) // 기본값은 0
-    gcTime: 10000, // 10초만 캐시가 유지 // stale < gctime
+    // staleTime: 60000, // 1분(60초) // 기본값은 0
+    // gcTime: 10000, // 10초만 캐시가 유지 // stale < gctime
     select: (data) => {
       return data.data;
     },
+    enabled: false, // 기본값 true
+    // refetchInterval: 3000,
+    // refetchOnMount: false, // 기본값 true
+    // refetchOnWindowFocus: true,
   });
   console.log("ddd", data, isLoading);
   console.log("error", isError, error);
@@ -28,9 +32,10 @@ function ReactQueryPage() {
   }
   return (
     <div>
-      {data.map((item) => (
+      {data?.map((item) => (
         <div>{item.title}</div>
       ))}
+      <button onClick={refetch}>post 리스트 다시 들고오기</button>
     </div>
   );
 }
