@@ -11,10 +11,11 @@ function ReactQueryPage() {
     queryFn: fetchPost,
     // retry: 에러 시도 3번(총 4회)
     retry: 1,
+    staleTime: 60000, // 1분(60초) // 기본값은 0
+    gcTime: 10000, // 10초만 캐시가 유지 // stale < gctime
     select: (data) => {
       return data.data;
     },
-    gcTime: 5000, // 5초
   });
   console.log("ddd", data, isLoading);
   console.log("error", isError, error);
